@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr Mentor Bhaiya</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">Mr Mentor Bhaiya</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#plans">Plans</a></li>
+        <li><a href="#upload">Upload Docs</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to Mr Mentor Bhaiya</h1>
+    <p>Your trusted mentorship program for NEET & JEE aspirants.</p>
+    <button onclick="window.location='#plans'">See Plans</button>
+  </section>
+
+  <!-- Membership Plans -->
+  <section id="plans">
+    <h2>Choose Your Membership Plan</h2>
+    <div class="plans-container">
+      <div class="plan gold">
+        <h3>Gold</h3>
+        <p class="price">₹4,999</p>
+        <ul>
+          <li>One-to-one weekly mentorship</li>
+          <li>Analysis sheet working</li>
+          <li>Weekly progress sharing</li>
+          <li>All exam updates</li>
+          <li>Query resolution</li>
+        </ul>
+        <!-- Example for Gold Plan -->
+        <button class="pay-btn" onclick="payNow('gold')">Pay Now</button>
+      </div>
+      <div class="plan platinum">
+        <h3>Platinum</h3>
+        <p class="price">₹9,999</p>
+        <ul>
+          <li>All Gold features</li>
+          <li>Hot topics for exam</li>
+          <li>Question solving tricks & methods</li>
+          <li>Monitoring test performance</li>
+          <li>Strategy & motivation</li>
+        </ul>
+        <button class="pay-btn" onclick="payNow('platinum')">Pay Now</button>
+      </div>
+      <div class="plan diamond">
+        <h3>Diamond</h3>
+        <p class="price">₹14,999</p>
+        <ul>
+          <li>All Platinum features</li>
+          <li>PYQ strengthening technique</li>
+          <li>Special PYQ-based tests (2 months prior)</li>
+          <li>Clinical support for stress management</li>
+          <li>Toppers mentorship support</li>
+        </ul>
+        <button class="pay-btn" onclick="payNow('diamond')">Pay Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Document Upload -->
+  <section id="upload" style="display:none;">
+    <h2>Upload Your Documents</h2>
+    <form>
+      <input type="file" name="documents" multiple required>
+      <button type="submit">Upload</button>
+    </form>
+  </section>
+
+  <!-- Mentor's Note Section -->
+  <section class="mentor-note">
+    <h2>A Note From Your Mentor</h2>
+    <p>
+      Hey, this is your mentor. I assure you that I will guide you through all your preparation phase as a mentor, like a brother. I will help you to manage your study, improve your efficiency, accuracy, and tackle all your problems. Just keep the faith alive. Great results are built by little efforts, discipline, and 100% dedication. If you have any query, feel free to connect with me.
+    </p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form onsubmit="return sendMailOrWhatsapp(event)">
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
+      <input type="email" id="email" name="email" placeholder="Your Email" required>
+      <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <div class="whatsapp-connect">
+      <a id="wa-link" href="https://wa.me/918120254404" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="whatsapp-logo">
+        Message us on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Mr Mentor Bhaiya. All rights reserved.</p>
+  </footer>
+
+  <div id="thankyou-message" style="display:none; text-align:center; padding:30px; background:linear-gradient(90deg,#8f2fff,#ff4f81); color:#fff; border-radius:18px; margin:30px auto; max-width:600px; font-size:1.3em; font-weight:bold;">
+    Thank you for choosing Mr. Mentor Bhaiya as your mentor!<br>
+    We will connect with you on WhatsApp for further assistance soon.
+  </div>
+
+  <script>
+    function showUploadSection() {
+      document.getElementById('upload').style.display = 'block';
+      document.getElementById('upload').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showThankYouMessage() {
+      document.getElementById('thankyou-message').style.display = 'block';
+      document.getElementById('thankyou-message').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function sendMailOrWhatsapp(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      // Compose mailto link
+      const subject = encodeURIComponent("Mentorship Query from " + name);
+      const body = encodeURIComponent(
+        "Name: " + name + "\nEmail: " + email + "\n\n" + message
+      );
+      window.location.href = `mailto:Vijaypatil4u2003@gmail.com?subject=${subject}&body=${body}`;
+
+      // Compose WhatsApp link (optional: auto-fill message)
+      const waMsg = encodeURIComponent(
+        `Hi Mentor Bhaiya, I am ${name} (${email}).\n${message}`
+      );
+      document.getElementById('wa-link').href = `https://wa.me/918120254404?text=${waMsg}`;
+
+      // Optionally, show a message or reset the form
+      // event.target.reset();
+      return false;
+    }
+
+    function payNow(plan) {
+      let amount = 0;
+      let description = '';
+      if (plan === 'gold') {
+        amount = 499900; // in paise (₹4,999)
+        description = 'Gold Membership';
+      } else if (plan === 'platinum') {
+        amount = 999900; // in paise (₹9,999)
+        description = 'Platinum Membership';
+      } else if (plan === 'diamond') {
+        amount = 1499900; // in paise (₹14,999)
+        description = 'Diamond Membership';
+      }
+
+      var options = {
+        "key": "rzp_test_O89P9FAAdiXLi7", // Updated Razorpay Test Key ID
+        "amount": amount,
+        "currency": "INR",
+        "name": "Mr Mentor Bhaiya",
+        "description": description,
+        "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg", // Optional: your logo
+        "handler": function (response){
+          showThankYouMessage();
+          showUploadSection();
+        },
+        "prefill": {
+          "name": "",
+          "email": ""
+        },
+        "theme": {
+          "color": "#8f2fff"
+        }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    }
+  </script>
+</body>
+</html>
